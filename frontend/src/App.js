@@ -1,15 +1,15 @@
 import React from "react";
-import './App.css';
-import LoginAdmin from './components/AdminLogin';
-import RegisterAdmin from './components/AdminRegister';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import MyNavbar from './components/MyNavbar';
-import Landing from './components/Landing';
-import Register from './components/Register';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import AdminDashboard from './components/AdminDashboard';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import "./App.css";
+import MyNavbar from "./components/MyNavbar";
 import Footer from "./components/Footer";
+import Landing from "./components/Landing";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import AdminDashboard from "./components/AdminDashboard";
+import RegisterAdmin from "./components/AdminRegister";
+import LoginAdmin from "./components/AdminLogin";
 import AdminUpdate from "./components/AdminUpdate";
 import PatientUpdate from "./components/PatientUpdate";
 import Upload from "./components/Upload";
@@ -28,22 +28,19 @@ function Layout({ children }) {
 
 function App() {
   return (
-    
     <BrowserRouter>
-    
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path='/admin/register' element={<RegisterAdmin/>}/>
-        <Route path='/admin/login' element={<LoginAdmin/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
-        <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
-        <Route path='/admin/update/:id' element={<AdminUpdate/>}/>
-        <Route path='/patient/update/:id' element={<PatientUpdate/>}/>
-        <Route path='/upload/:id' element={<Upload/>}/>
-        <Route path='/profile/:id' element={<Profile/>}/>
-        
+        <Route path="/" element={<Layout><Landing /></Layout>} />
+        <Route path="/register" element={<Layout><Register /></Layout>} />
+        <Route path="/login" element={<Layout><Login /></Layout>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/admin/register" element={<Layout><RegisterAdmin /></Layout>} />
+        <Route path="/admin/login" element={<Layout><LoginAdmin /></Layout>} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/update/:id" element={<AdminUpdate />} />
+        <Route path="/patient/update/:id" element={<PatientUpdate />} />
+        <Route path="/upload/:id" element={<Upload />} />
       </Routes>
     </BrowserRouter>
   );

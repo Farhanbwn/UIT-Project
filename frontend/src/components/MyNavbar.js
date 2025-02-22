@@ -52,9 +52,6 @@ const MyNavbar = () => {
                         <Button variant="outline-dark" onClick={() => navigate("/admin/login")}>
                             Admin/Staff Login
                         </Button>
-                        {/* <Button variant="outline-dark" onClick={() => navigate("/signup")}>
-                            Sign Up
-                        </Button> */}
                     </div>
                 </Navbar.Collapse>
             </Container>
