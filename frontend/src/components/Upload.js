@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import './Upload.css';
 import React, { useState, useRef } from 'react';
 
@@ -7,6 +8,9 @@ const Upload = () => {
     const [otherDetails, setOtherDetails] = useState('');
     const [error, setError] = useState('');
     const fileInputRef = useRef(null);
+    const params = useParams();
+    const navigate = useNavigate();
+
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -40,12 +44,23 @@ const Upload = () => {
         }
     };
 
-    const handleUpload = () => {
+    const handleUpload = async () => {
         if (!fileType) {
             setError('Please select a file type.');
             return;
         }
-        alert(`Uploading: ${file.name} as ${fileType} ${fileType === "Other" && otherDetails ? `with details: ${otherDetails}` : ''}`);
+        const formData = new FormData();
+        formData.append("file", file);
+        let result = await fetch(`http://localhost:5000/upload/${params.id}`, {
+            method: "put",
+            body: formData,
+        });
+        result = await result.json();
+        if (result) {
+            alert(`Uploading: ${file.name} as ${fileType} ${fileType === "Other" && otherDetails ? `with details: ${otherDetails}` : ''}`);
+            navigate('/dashboard');
+        }
+
     };
 
     return (
@@ -58,6 +73,7 @@ const Upload = () => {
                     className="form-control"
                     onChange={handleFileChange}
                     ref={fileInputRef}
+                    accept=".pdf,.jpg,.jpeg"
                 />
             </div>
 
@@ -72,21 +88,24 @@ const Upload = () => {
                         >
                             <option value="">-- Select File Type --</option>
                             <option value="Prescription">Prescription</option>
-                            <option value="Medical Report">Medical Report</option>
-                            <option value="Invoice">Invoice</option>
+                            <option value="ecg">ECG Report</option>
+                            <option value="usg">USG Report</option>
+                            <option value="echo">Echo Report</option>
+                            <option value="ct">CT Scan</option>
+                            <option value="mri">MRI</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
 
                     {fileType === "Other" && (
                         <div className="mb-3">
-                            <label className="form-label">Enter File Details (Optional):</label>
+                            <label className="form-label">Enter File Details:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 placeholder="Enter details about the file"
-                                value={otherDetails}
-                                onChange={(e) => setOtherDetails(e.target.value)}
+                                value={fileType}
+                                onChange={(e) => setFileType(e.target.value)}
                             />
                         </div>
                     )}

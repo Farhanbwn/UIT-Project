@@ -41,7 +41,7 @@ function App() {
         <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
         <Route path='/admin/update/:id' element={<AdminUpdate/>}/>
         <Route path='/patient/update/:id' element={<PatientUpdate/>}/>
-        <Route path='/upload' element={<Upload/>}/>
+        <Route path='/upload/:id' element={<Upload/>}/>
         <Route path='/profile/:id' element={<Profile/>}/>
         
       </Routes>
