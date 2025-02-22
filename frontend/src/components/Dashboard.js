@@ -18,12 +18,15 @@ const Dashboard = () => {
                 <Link to={'/profile/'+user._id} className="btn btn-primary w-100 mb-2 d-flex align-items-center">
                     <FaUserPlus className="me-2" /> Profile
                 </Link>
+                <Link to={'/patient/update/'+user._id} className="btn btn-info w-100 mb-2 d-flex align-items-center">
+                    <FaUserEdit className="me-2" /> Update Profile
+                </Link>
+                <Link to={'/upload/'+user._id} className="btn btn-info w-100 mb-2 d-flex align-items-center">
+                    <FaUserEdit className="me-2" /> Upload Documents
+                </Link>
                 <button onClick={logout} className="btn btn-secondary w-100 mb-2 d-flex align-items-center">
                     <FaSignInAlt className="me-2" /> Logout
                 </button>
-                <Link to={'/patient/update/'+user._id} className="btn btn-info w-100 d-flex align-items-center">
-                    <FaUserEdit className="me-2" /> Update Profile
-                </Link>
                 <div className="flex-grow-1"></div>
             </div>
 

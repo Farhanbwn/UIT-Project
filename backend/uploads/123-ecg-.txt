@@ -1,0 +1,15 @@
+kali.org
+service tor start
+service tor stop
+service tor status
+
+hidden wiki
+nmap -0 192.168.0.123
+nmap -pn 129.234.0.190
+nmap -pn -0 192.168.0.129
+nmap -sn 192.168.0.1/24
+nmap -p-
+
+msfconsole
+vmware workstation
+virtual box

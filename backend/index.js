@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
 const cors = require("cors");
+const path = require("path");
 require('./db/config');
 const User = require('./db/User');
 const Admin = require('./db/Admin');
@@ -14,7 +16,7 @@ app.use(cors());
 
 //User Register
 app.post("/register", async (req, resp) => {
-    let user = await User.findOne(req.body.email);
+    let user = await User.findOne({ email: req.body.email });
     if (user) {
         resp.send({ result: "User Already Registered" });
     } else {
@@ -23,13 +25,7 @@ app.post("/register", async (req, resp) => {
         result = result.toObject();
         delete result.password;
         if (result) {
-            jwt.sign({ result }, jwtkey, { expiresIn: "2h" }, (err, token) => {
-                if (err) {
-                    resp.send({ result: 'Something went wrong' });
-                } else {
-                    resp.send({ result, auth: token });
-                }
-            });
+            resp.send(result);
         } else {
             resp.send({ result: 'Enter Details' });
         }
@@ -58,7 +54,7 @@ app.post('/login', async (req, resp) => {
 
 //Admin Register
 app.post("/admin/register", async (req, resp) => {
-    let admin = await Admin.findOne(req.body.email);
+    let admin = await Admin.findOne({ govt_id: req.body.govt_id });
     if (admin) {
         resp.send({ result: "Admin Already Registered" });
     } else {
@@ -86,14 +82,14 @@ app.post('/admin/login', async (req, resp) => {
         let admin = await Admin.findOne(req.body).select("-password");
         if (admin) {
             if (admin.dept == req.body.dept) {
-                jwt.sign({admin},jwtkey,{expiresIn:"2h"},(err,token)=>{
-                    if(err){
-                        resp.send({result:'Something went wrong'});
-                    }else{
-                    resp.send({admin,auth:token});
+                jwt.sign({ admin }, jwtkey, { expiresIn: "2h" }, (err, token) => {
+                    if (err) {
+                        resp.send({ result: 'Something went wrong' });
+                    } else {
+                        resp.send({ admin, auth: token });
                     }
                 });
-            }else{
+            } else {
                 resp.send({ result: 'No user Found' });
             }
 
@@ -144,6 +140,29 @@ app.put('/admin/:id', verifyToken, async (req, resp) => {
             $set: req.body
         }
     )
+    resp.send(result);
+});
+
+// Upload Documents 
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, "uploads");
+        },
+        filename: async function (req, file, cb) {
+            let user = await User.findOne({ _id: req.params.id });
+            let finalFileName=`${user.aadhar}-${file.originalname}`;
+            cb(null, finalFileName);
+        }
+    })
+}).single("file");
+
+app.put("/upload/:id", upload, async (req, resp) => {
+    let result = await User.findByIdAndUpdate(
+        req.params.id,
+        { $push: { doc: req.file.filename } },
+        { new: true }
+    );
     resp.send(result);
 });
 
