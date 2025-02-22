@@ -47,11 +47,6 @@ export default function Landing() {
         },
     ];
 
-
-
-
-
-
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -175,10 +170,7 @@ export default function Landing() {
                     </Row>
                 </Container>
             </div>
-
-
-
-            <div className="contact-section bg-light py-5">
+            <div id="contact" className="contact-section bg-light py-5">
             <Container>
                 <h2 className="text-center mb-4">Contact Us</h2>
                 <Row className="justify-content-center">
@@ -186,41 +178,16 @@ export default function Landing() {
                         <Form onSubmit={handleSubmit} className="p-4 shadow bg-white rounded">
                             <Form.Group className="mb-3">
                                 <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} required />
                             </Form.Group>
-
                             <Form.Group className="mb-3">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Control type="email" placeholder="Enter your email" name="email" value={formData.email} onChange={handleChange} required />
                             </Form.Group>
-
                             <Form.Group className="mb-3">
                                 <Form.Label>Message</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    rows={4}
-                                    placeholder="Type your message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Control as="textarea" rows={4} placeholder="Type your message" name="message" value={formData.message} onChange={handleChange} required />
                             </Form.Group>
-
                             <Button variant="primary" type="submit" className="w-100">
                                 Send Message
                             </Button>

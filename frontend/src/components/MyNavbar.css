@@ -5,6 +5,7 @@
 
 .menu {
     border: none !important;
+    padding-right: 0px !important;
 }
 
 .menu-options {
